@@ -6,6 +6,7 @@ import asyncio
 import aiohttp
 import time
 import concurrent.futures
+import multiprocessing
 
 
 # 异步网页下载
@@ -64,6 +65,18 @@ def calcuter_dp(numbers):
 	calculate_sums_dp(numbers)
 	end_time = time.perf_counter()
 	print("动态规划版本，耗时{}秒".format(end_time-start_time))
+	
+# 思考题的multiprocessing版本
+def calculate_sums_multiprocessing(numbers):
+	with multiprocessing.Pool() as pool:
+		pool.map(cpu_bound, numbers)
+		
+def calcuter_multiprocessing(numbers):
+	start_time = time.perf_counter()
+	calculate_sums_multiprocessing(numbers)
+	end_time = time.perf_counter()
+	print("multiprocessing版本，耗时{}秒".format(end_time-start_time))
+
 
 if __name__ == "__main__":
 	sites = [
@@ -86,4 +99,5 @@ if __name__ == "__main__":
 	calcuter_normal(numbers)
 	calcuter_future(numbers)
 	calcuter_dp(numbers)
+	calcuter_multiprocessing(numbers)
 	
