@@ -5,7 +5,9 @@
 import requests
 import timeit
 import websocket
-import thread
+import threading
+import ssl
+import json
 
 
 # 获取报价
@@ -37,8 +39,20 @@ def on_open(ws):
 		print("websocket关闭了")
 	
 	# 在另一个线程运行gao函数
-	thread.start_new_thread(gao, ())
+	threading.start_new_thread(gao, ())
 
+
+# 获取报价
+count = 5
+
+def on_mes(ws, message):
+	global count
+	print(message)
+	count -= 1
+	print("count={}".format(count))
+	# 接受五次消息后关闭
+	if count == 0:
+		ws.close()
 
 
 if __name__ == "__main__":
@@ -47,6 +61,8 @@ if __name__ == "__main__":
 	latency = timeit.timeit("get_orderbook()", setup = "from __main__ import get_orderbook", number = n)
 	print("Latency is {} ms.".format(latency * 1000))
 	'''
-	ws = websocket.WebSocketApp("ws://echo.websocket.org", on_message = on_message, on_open = on_open)
-	ws.run_forever()
+	# ws = websocket.WebSocketApp("ws://echo.websocket.org", on_message = on_message, on_open = on_open)
+	# ws.run_forever()
+	ws = websocket.WebSocketApp("wss://api.gemini.com/v1/marketdata/btcusd?top_of_book=true&offers=true", on_message = on_message)
+	ws.run_forever(sslopt={"cert_reqs" : ssl.CERT_NONE})
 	
