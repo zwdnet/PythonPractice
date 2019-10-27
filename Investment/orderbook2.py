@@ -63,10 +63,11 @@ class Crawler:
 		
 	def on_message(self, message):
 		data = json.loads(message)
-		print(data)
+		# print(data)
+		print(data["events"])
 		for event in data["events"]:
 			price, amount, direction = float(event["remaining"]), event["side"], self.orderbook.insert(price, amount, direction)
-			
+			print("到这了")
 		self.orderbook.sort_and_truncate()
 		
 		with open(self.output_file, "a+") as f:
@@ -76,7 +77,7 @@ class Crawler:
 			    "asks" : asks,
 			    "ts" : int(time.time() * 1000)
 			}
-			print(json.dumps.output)
+			print(json.dumps(output))
 			f.write(json.dumps(output) + "/n")
 
 
