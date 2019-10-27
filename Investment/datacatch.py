@@ -19,6 +19,9 @@ def get_orderbook():
 # 在接收到服务器发送的消息时调用
 def on_message(ws, message):
 	print("接受到:" + message)
+	with open("BTCUSD.txt", "a+") as f:
+			print(message)
+			f.write(json.dumps(message) + "/n")
 	
 
 # 在和服务器建立完全连接时调用
