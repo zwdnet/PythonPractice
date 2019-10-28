@@ -63,8 +63,11 @@ class Crawler:
 		
 	def on_message(self, message):
 		data = json.loads(message)
-		# print(data)
+		print(data)
 		print(data["events"])
+                for event in data["events"]:
+                    print(event)
+                '''
 		for event in data["events"]:
 			price, amount, direction = float(event["remaining"]), event["side"], self.orderbook.insert(price, amount, direction)
 			print("到这了")
@@ -79,7 +82,7 @@ class Crawler:
 			}
 			print(json.dumps(output))
 			f.write(json.dumps(output) + "/n")
-
+'''
 
 if __name__ == "__main__":
 	crawler = Crawler(symbol = "BTCUSD", output_file = "BTCUSE.txt")
