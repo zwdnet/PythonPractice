@@ -65,12 +65,11 @@ class Crawler:
 		data = json.loads(message)
 		# print(data)
 		# print(data["events"])
-		for event in data["events"]:
-			price = float(event["price"])
-			amount = event["remaining"]
-			direction = event["side"]
-			self.orderbook.insert(price, amount, direction)
-			print(price, amount, direction)
+		price = float(data["events"]["price"])
+		amount = data["events"]["remaining"]
+		direction = data["events"]["side"]
+		self.orderbook.insert(price, amount, direction)
+		print(price, amount, direction)
 		
 		"""
 		self.orderbook.sort_and_truncate()
