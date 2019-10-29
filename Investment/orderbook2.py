@@ -73,7 +73,7 @@ class Crawler:
 		direction = data["events"]["side"]
 		self.orderbook.insert(price, amount, direction)
 		print(price)
-		
+		input("按任意键继续")
 		"""
 		self.orderbook.sort_and_truncate()
 		
