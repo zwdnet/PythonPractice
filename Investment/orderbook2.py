@@ -7,6 +7,7 @@ import json
 import ssl
 import time
 import websocket
+import pysnooper
 
 
 class OrderBook(object):
@@ -60,16 +61,18 @@ class Crawler:
 		self.output_file = output_file
 		self.ws = websocket.WebSocketApp("wss://api.gemini.com/v1/marketdata/{}".format(symbol), on_message = lambda ws, message : self.on_message(message))
 		self.ws.run_forever(sslopt = {"cert_reqs" : ssl.CERT_NONE})
-		
+	
+	@pysnooper.snoop()
 	def on_message(self, message):
 		data = json.loads(message)
-		# print(data)
-		# print(data["events"])
+		print(data)
+		print(data["events"])
+		# for event in data["events"]:
 		price = float(data["events"]["price"])
 		amount = data["events"]["remaining"]
 		direction = data["events"]["side"]
 		self.orderbook.insert(price, amount, direction)
-		print(price, amount, direction)
+		print(price)
 		
 		"""
 		self.orderbook.sort_and_truncate()
