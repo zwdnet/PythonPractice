@@ -200,7 +200,6 @@ class Backtest:
 		s["初始市值"] = broker.initial_cash
 		s["结束市值"] = broker.market_value
 		s["收益"] = broker.market_value - broker.initial_cash
-		print(s)
 		return s
 		
 

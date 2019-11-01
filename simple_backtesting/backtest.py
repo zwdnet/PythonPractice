@@ -103,6 +103,7 @@ class Backtest:
         assert_msg(issubclass(broker_type, ExchangeAPI), 'strategy_type不是一个Strategy类型')
         assert_msg(isinstance(commission, Number), 'commission不是浮点数值类型')
 
+        # False代表浅复制，没有内存拷贝	
         data = data.copy(False)
 
         # 如果没有Volumn列，填充NaN
@@ -170,4 +171,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
