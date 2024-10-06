@@ -54,7 +54,7 @@ def parse_readline(infile):
 		
 		# 按照词频排序
 		sorted_word_cnt = sorted(word_cnt.items(), key = lambda kv: kv[1], reverse = True)
-		return sorted_word_cnt
+	return sorted_word_cnt
 	
 
 if __name__ == "__main__":
